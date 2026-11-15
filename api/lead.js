@@ -2,7 +2,11 @@ import { Resend } from 'resend';
 import { escapeHtml, isEmail, cleanText, guardRequest } from './_lib/security.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const NOTIFY = process.env.LEAD_NOTIFY_EMAIL || 'info@mindthejob.com';
+// Comma-separated list in Vercel (LEAD_NOTIFY_EMAIL), otherwise both company inboxes.
+const NOTIFY = (process.env.LEAD_NOTIFY_EMAIL || 'info@mindthejob.com,shahriar@mindthejob.com')
+    .split(',')
+    .map((e) => e.trim())
+    .filter((e) => isEmail(e));
 
 const TYPES = {
     demo: 'Free 14-day demo request',
@@ -48,7 +52,7 @@ export default async function handler(request, response) {
 
         const { error } = await resend.emails.send({
             from: 'Mind the Job Website <no-reply@mindthejob.com>',
-            to: [NOTIFY],
+            to: NOTIFY,
             reply_to: email,
             subject: `${title}: ${company.replace(/[\r\n]/g, ' ')}`,
             html: `
