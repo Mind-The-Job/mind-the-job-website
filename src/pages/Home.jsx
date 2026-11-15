@@ -1,7 +1,71 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, Clock, ShieldCheck, MessageCircle, Users, Lock, KeyRound, GraduationCap, Check, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { FileText, Clock, ShieldCheck, MessageCircle, Users, Lock, KeyRound, GraduationCap, Check, ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
 import { plans, formatGBP } from '../data/compliance';
+import { ChatMockup, DashboardMockup, CheckMockup, ExpiryMockup, ReportMockup, FlagChip } from '../components/home/Mockups';
+
+const fadeUp = {
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-60px' },
+    transition: { duration: 0.5 },
+};
+
+const showcase = [
+    {
+        eyebrow: 'Collect',
+        title: 'Workers send documents on WhatsApp. No app, no portal, no chasing.',
+        text: 'Your AI assistant asks each worker for exactly what your clients need, answers their questions at 10pm, and keeps going until the file is complete.',
+        Mock: ChatMockup,
+    },
+    {
+        eyebrow: 'Check',
+        title: 'Every document read and checked in seconds. You just approve.',
+        text: 'Names, dates, certificate numbers and expiry dates are checked automatically. Anything odd is flagged in plain English, and a person at your agency makes every decision.',
+        Mock: CheckMockup,
+    },
+    {
+        eyebrow: 'Protect',
+        title: 'Nothing expires on shift again.',
+        text: 'Every DBS, right to work and training certificate is tracked. Workers are reminded at 60, 30 and 7 days, and you see who is at risk before your client does.',
+        Mock: ExpiryMockup,
+    },
+    {
+        eyebrow: 'Prove',
+        title: 'A monthly report that shows exactly what you got for your money.',
+        text: 'Hours saved, documents checked, workers cleared and expiries caught, in one page you can share with your directors and your clients.',
+        Mock: ReportMockup,
+    },
+];
+
+const faqs = [
+    ['Do I have to change my CRM or recruitment software?', 'No. We work alongside the tools you already use, such as your CRM, email, WhatsApp and spreadsheets. Nothing to migrate.'],
+    ['Does the AI make decisions about workers?', 'No. The AI collects, reads and flags documents. A person at your agency approves or rejects every one, and every decision is logged with a name and time.'],
+    ['How is worker data kept safe?', 'Every client signs a Data Processing Agreement and we complete a data protection impact assessment before go-live. Access needs multi-factor login, and every access is logged. See our Security page for details.'],
+    ['How long does it take to get started?', 'Usually 14 days from signing. We set everything up, test it on real files with you, then go live.'],
+    ['What if it doesn’t save us time?', 'If you don’t save at least 8 hours a week within 60 days of going live, your next month is free. You can also try the free demo first.'],
+    ['Is there a long contract?', 'Annual plans have £0 setup. Monthly rolling plans have a 3-month minimum and then one month’s notice.'],
+];
+
+function Faq() {
+    const [open, setOpen] = useState(0);
+    return (
+        <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+            {faqs.map(([q, a], i) => (
+                <div key={q}>
+                    <h3>
+                        <button type="button" aria-expanded={open === i} aria-controls={`faq-${i}`} onClick={() => setOpen(open === i ? -1 : i)}
+                            className="w-full flex justify-between items-center gap-4 text-left px-6 py-5 font-semibold text-primary hover:bg-slate-50">
+                            {q}<ChevronDown size={20} className={`shrink-0 transition-transform ${open === i ? 'rotate-180' : ''}`} aria-hidden="true" />
+                        </button>
+                    </h3>
+                    <div id={`faq-${i}`} hidden={open !== i} className="px-6 pb-5 text-text-muted">{a}</div>
+                </div>
+            ))}
+        </div>
+    );
+}
 
 const problems = [
     { icon: FileText, title: 'Chasing documents for weeks', text: 'DBS, right to work, training certificates and references take weeks to collect. Every day of waiting is a shift you can’t fill.' },
@@ -37,38 +101,60 @@ export const Home = () => {
     return (
         <div className="bg-surface-muted text-text-main">
             {/* Hero */}
-            <section className="bg-gradient-to-b from-teal-50 via-white to-white pt-36 pb-20">
-                <div className="container mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-6">
-                        <p className="text-sm font-semibold uppercase tracking-wider text-secondary-dark">AI compliance and admin for UK staffing agencies</p>
-                        <h1 className="text-4xl md:text-6xl font-bold text-primary leading-tight">Stop chasing paperwork. Get every worker compliant in days, not weeks.</h1>
-                        <p className="text-lg md:text-xl text-text-muted max-w-xl">Your AI compliance team collects and checks every candidate document, tracks every expiry date and keeps you ready for the Fair Work Agency, 24/7. You approve in minutes. We do the rest.</p>
+            <section className="relative overflow-hidden bg-[#0B1220] text-white pt-36 pb-24">
+                <div aria-hidden="true" className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:48px_48px]" />
+                <div aria-hidden="true" className="absolute -top-40 -right-32 w-[620px] h-[620px] rounded-full bg-teal-500/25 blur-3xl" />
+                <div aria-hidden="true" className="absolute -bottom-48 -left-40 w-[520px] h-[520px] rounded-full bg-amber-400/15 blur-3xl" />
+                <div className="relative container mx-auto px-4 md:px-6 grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="space-y-7">
+                        <p className="inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-400/10 px-4 py-1.5 text-sm font-semibold text-teal-200">
+                            <Sparkles size={16} aria-hidden="true" />AI compliance team for UK staffing agencies
+                        </p>
+                        <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
+                            Stop chasing paperwork.{' '}
+                            <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">Get every worker compliant in days,</span>{' '}not weeks.
+                        </h1>
+                        <p className="text-lg md:text-xl text-slate-300 max-w-xl">We collect and check every candidate document on WhatsApp, track every expiry date and keep you ready for the Fair Work Agency, 24/7. You approve in minutes. We do the rest.</p>
                         <div className="flex flex-col sm:flex-row gap-3">
-                            <Link to="/health-check" className="inline-flex justify-center items-center rounded-xl bg-amber-400 text-primary font-bold px-6 py-4 shadow-lg shadow-amber-400/30 hover:bg-amber-300 transition-colors">Book your free Compliance Health Check</Link>
-                            <Link to="/demo" className="inline-flex justify-center items-center rounded-xl border border-slate-300 bg-white text-primary font-semibold px-6 py-4 hover:border-primary transition-colors">Try the free 14-day demo</Link>
+                            <Link to="/health-check" className="group inline-flex justify-center items-center gap-2 rounded-xl bg-amber-400 text-slate-900 font-bold px-7 py-4 shadow-lg shadow-amber-400/30 hover:bg-amber-300 transition-colors">
+                                Book your free Health Check<ArrowRight size={18} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                            </Link>
+                            <Link to="/demo" className="inline-flex justify-center items-center rounded-xl border border-white/25 bg-white/5 text-white font-semibold px-7 py-4 hover:bg-white/10 transition-colors">Try the free demo</Link>
                         </div>
-                        <ul className="flex flex-wrap gap-2 text-sm font-semibold">
-                            {['Live in 14 days', '£0 setup on annual plans', '8+ hours a week saved, or a month free', 'UK GDPR by design'].map((t) => (
-                                <li key={t} className="rounded-full bg-teal-50 text-teal-900 border border-teal-200 px-3 py-1">{t}</li>
+                        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-300">
+                            {['Live in 14 days', '£0 setup on annual plans', 'A person approves every decision', 'UK GDPR by design'].map((t) => (
+                                <li key={t} className="flex items-center gap-2"><Check size={16} className="text-teal-300" aria-hidden="true" />{t}</li>
                             ))}
                         </ul>
+                    </motion.div>
+
+                    <div className="relative flex justify-center lg:justify-end" aria-label="Example of the service: a WhatsApp chat collecting documents and a compliance dashboard">
+                        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="relative z-10">
+                            <ChatMockup />
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.5 }}
+                            className="hidden md:block absolute -left-4 lg:-left-40 bottom-[-40px] w-[330px] z-20">
+                            <DashboardMockup />
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.1 }} className="hidden sm:block absolute top-6 -right-2 lg:right-[-24px] z-30">
+                            <FlagChip>DBS checked · 38 sec</FlagChip>
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.4 }} className="hidden sm:block absolute top-1/2 -left-6 lg:left-[-70px] z-30">
+                            <FlagChip tone="warn">Training expires in 12 days</FlagChip>
+                        </motion.div>
                     </div>
-                    <div className="bg-primary rounded-3xl p-6 text-slate-200 shadow-xl" aria-label="Example dashboard">
-                        <div className="flex justify-between items-center mb-4">
-                            <p className="font-semibold text-white">Worker compliance this week</p>
-                            <p className="text-xs text-slate-400">Example view</p>
+                </div>
+            </section>
+
+            {/* Proof numbers */}
+            <section aria-label="Our promises" className="bg-white border-b border-slate-200">
+                <div className="container mx-auto px-4 md:px-6 grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-200">
+                    {[['14 days', 'from sign-up to live'], ['24/7', 'replies to your workers'], ['1 hour', 'our reply time, working days'], ['8+ hrs', 'saved a week, or a month free']].map(([n, l]) => (
+                        <div key={l} className="py-8 px-4 text-center">
+                            <p className="text-3xl md:text-4xl font-extrabold text-primary tracking-tight">{n}</p>
+                            <p className="text-sm text-text-muted mt-1">{l}</p>
                         </div>
-                        <div className="grid grid-cols-3 gap-3 mb-4">
-                            {[['42', 'documents checked'], ['6', 'expiries caught'], ['9', 'workers cleared']].map(([n, l]) => (
-                                <div key={l} className="bg-slate-800 rounded-xl p-3"><p className="text-2xl font-bold text-white">{n}</p><p className="text-xs text-slate-300">{l}</p></div>
-                            ))}
-                        </div>
-                        <ul className="space-y-2 text-sm">
-                            <li className="flex justify-between gap-3 bg-slate-800 rounded-lg px-3 py-3"><span>A. Patel · Care assistant</span><span className="rounded-full bg-emerald-100 text-emerald-900 px-2 font-semibold">Cleared</span></li>
-                            <li className="flex justify-between gap-3 bg-slate-800 rounded-lg px-3 py-3"><span>J. Okafor · Nurse</span><span className="rounded-full bg-amber-100 text-amber-900 px-2 font-semibold">DBS due in 12 days</span></li>
-                            <li className="flex justify-between gap-3 bg-slate-800 rounded-lg px-3 py-3"><span>M. Silva · Support worker</span><span className="rounded-full bg-red-100 text-red-900 px-2 font-semibold">Right to work missing</span></li>
-                        </ul>
-                    </div>
+                    ))}
                 </div>
             </section>
 
@@ -89,12 +175,39 @@ export const Home = () => {
                     <p className="text-lg text-text-muted mb-10 max-w-2xl">Small agencies lose hours every week to paperwork that a well-built system can do for them.</p>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {problems.map(({ icon: Icon, title, text }) => (
-                            <div key={title} className="bg-white border border-slate-200 rounded-2xl p-6">
-                                <Icon className="text-secondary-dark mb-3" size={28} aria-hidden="true" />
+                            <motion.div {...fadeUp} key={title} className="bg-white border border-slate-200 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg transition">
+                                <div className="w-12 h-12 rounded-xl bg-red-50 grid place-items-center mb-4"><Icon className="text-red-600" size={24} aria-hidden="true" /></div>
                                 <h3 className="text-lg font-bold mb-2">{title}</h3>
                                 <p className="text-text-muted">{text}</p>
-                            </div>
+                            </motion.div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Showcase */}
+            <section className="bg-white py-24">
+                <div className="container mx-auto px-4 md:px-6">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <p className="text-sm font-semibold uppercase tracking-wider text-secondary-dark mb-2">See it working</p>
+                        <h2 className="text-3xl md:text-5xl font-extrabold text-primary tracking-tight">From first message to cleared worker, without the chasing</h2>
+                    </div>
+                    <div className="space-y-24">
+                        {showcase.map(({ eyebrow, title, text, Mock }, i) => (
+                            <motion.div {...fadeUp} key={eyebrow} className="grid lg:grid-cols-2 gap-12 items-center">
+                                <div className={i % 2 ? 'lg:order-2' : ''}>
+                                    <p className="inline-flex items-center gap-2 text-sm font-bold text-secondary-dark mb-3"><span className="w-7 h-7 rounded-full bg-teal-700 text-white grid place-items-center text-xs">{i + 1}</span>{eyebrow}</p>
+                                    <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">{title}</h3>
+                                    <p className="text-lg text-text-muted">{text}</p>
+                                </div>
+                                <div className={`relative rounded-3xl bg-gradient-to-br from-teal-50 via-slate-50 to-amber-50 p-8 md:p-12 flex justify-center ${i % 2 ? 'lg:order-1' : ''}`}>
+                                    <div className="w-full max-w-sm flex justify-center"><Mock /></div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                    <div className="text-center mt-16">
+                        <Link to="/demo" className="inline-flex items-center gap-2 rounded-xl bg-primary text-white font-bold px-7 py-4 hover:bg-slate-800">Try it yourself in the free demo<ArrowRight size={18} aria-hidden="true" /></Link>
                     </div>
                 </div>
             </section>
@@ -199,14 +312,34 @@ export const Home = () => {
                     <h2 className="text-3xl md:text-4xl font-bold text-primary mb-10">Worker data is sensitive. We protect it like our own.</h2>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         {security.map(({ icon: Icon, title, text }) => (
-                            <div key={title} className="bg-white border border-slate-200 rounded-2xl p-6">
-                                <Icon className="text-secondary-dark mb-3" size={26} aria-hidden="true" />
+                            <div key={title} className="bg-white border border-slate-200 rounded-2xl p-6 hover:-translate-y-1 hover:shadow-lg transition">
+                                <div className="w-12 h-12 rounded-xl bg-teal-50 grid place-items-center mb-4"><Icon className="text-teal-700" size={24} aria-hidden="true" /></div>
                                 <h3 className="font-bold mb-1">{title}</h3>
                                 <p className="text-text-muted text-sm">{text}</p>
                             </div>
                         ))}
                     </div>
                     <Link to="/security" className="inline-flex items-center gap-2 mt-8 font-semibold text-secondary-dark">Read our security summary <ArrowRight size={18} aria-hidden="true" /></Link>
+                </div>
+            </section>
+
+            {/* CEO promise */}
+            <section className="bg-[#0B1220] text-white py-20">
+                <motion.div {...fadeUp} className="container mx-auto px-4 md:px-6 max-w-4xl grid md:grid-cols-[auto_1fr] gap-8 items-center">
+                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-300 to-amber-500 text-slate-900 grid place-items-center text-3xl font-extrabold" aria-hidden="true">SA</div>
+                    <div>
+                        <p className="text-sm font-semibold uppercase tracking-wider text-teal-300 mb-3">Our promise</p>
+                        <p className="text-xl md:text-2xl leading-relaxed text-slate-100">“We built Mind the Job because small agencies deserve the same compliance support as the big firms, without the big-firm price. If we don’t save you real time, you don’t pay for it.”</p>
+                        <p className="mt-4 font-semibold">Shahriar Arafat <span className="text-slate-400 font-normal">· CEO, Mind the Job</span></p>
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* FAQ */}
+            <section className="py-24">
+                <div className="container mx-auto px-4 md:px-6 max-w-3xl">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-primary tracking-tight mb-8 text-center">Questions agencies ask us</h2>
+                    <Faq />
                 </div>
             </section>
 
@@ -223,7 +356,7 @@ export const Home = () => {
             </section>
 
             {/* Final CTA */}
-            <section className="bg-secondary-dark text-white py-20">
+            <section className="relative overflow-hidden bg-gradient-to-br from-teal-700 via-teal-800 to-[#0B1220] text-white py-24">
                 <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Find out how many hours you could get back</h2>
                     <p className="text-lg text-teal-50 mb-8">A free 30-minute Compliance Health Check, with a 1-page report within 24 hours. No obligation.</p>

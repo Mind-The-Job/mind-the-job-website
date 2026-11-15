@@ -34,10 +34,7 @@ export const Navbar = ({ style }) => {
     return (
         <nav
             style={style}
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/'
-                ? 'bg-surface/90 backdrop-blur-md shadow-sm py-2'
-                : 'bg-transparent py-4'
-                }`}
+            className={`fixed w-full z-50 transition-all duration-300 bg-surface/95 backdrop-blur-md shadow-sm ${isScrolled ? 'py-2' : 'py-3'}`}
         >
             <div className={`relative z-20 container mx-auto px-4 md:px-6 flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16' : 'h-24'}`}>
                 {/* Logo */}
