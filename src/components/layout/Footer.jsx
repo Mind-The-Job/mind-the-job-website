@@ -72,22 +72,22 @@ export const Footer = () => {
 
                     {/* Links Columns */}
                     <div>
-                        <h4 className="text-lg font-semibold mb-6 text-secondary">For Companies</h4>
+                        <h4 className="text-lg font-semibold mb-6 text-secondary">Compliance Autopilot</h4>
                         <ul className="space-y-4 text-gray-300">
-                            <li><Link to="/companies" className="hover:text-white transition-colors">Browse Talent</Link></li>
-                            <li><Link to="/companies" className="hover:text-white transition-colors">Post a Job</Link></li>
-                            <li><Link to="/companies" className="hover:text-white transition-colors">Executive Search</Link></li>
-                            <li><Link to="/companies" className="hover:text-white transition-colors">Pricing</Link></li>
+                            <li><Link to="/health-check" className="hover:text-white transition-colors">Free Compliance Health Check</Link></li>
+                            <li><Link to="/demo" className="hover:text-white transition-colors">Try the free demo</Link></li>
+                            <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing and plans</Link></li>
+                            <li><Link to="/security" className="hover:text-white transition-colors">Security and UK GDPR</Link></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="text-lg font-semibold mb-6 text-secondary">For Candidates</h4>
+                        <h4 className="text-lg font-semibold mb-6 text-secondary">Company</h4>
                         <ul className="space-y-4 text-gray-300">
-                            <li><Link to="/" className="hover:text-white transition-colors">Find a Job</Link></li>
-                            <li><Link to="/candidates" className="hover:text-white transition-colors">Submit CV</Link></li>
-                            <li><Link to="/blog" className="hover:text-white transition-colors">Career Advice</Link></li>
-                            <li><Link to="/blog" className="hover:text-white transition-colors">Salary Guide</Link></li>
+                            <li><Link to="/training" className="hover:text-white transition-colors">Staff training</Link></li>
+                            <li><Link to="/companies" className="hover:text-white transition-colors">Recruitment support</Link></li>
+                            <li><Link to="/blog" className="hover:text-white transition-colors">Insights</Link></li>
+                            <li><Link to="/contact" className="hover:text-white transition-colors">Contact us</Link></li>
                         </ul>
                     </div>
 
