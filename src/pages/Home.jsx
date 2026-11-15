@@ -139,7 +139,7 @@ export const Home = () => {
                         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.1 }} className="hidden sm:block absolute top-6 -right-2 lg:right-[-24px] z-30">
                             <FlagChip>DBS checked · 38 sec</FlagChip>
                         </motion.div>
-                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.4 }} className="hidden sm:block absolute top-1/2 -left-6 lg:left-[-70px] z-30">
+                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.4 }} className="hidden sm:block absolute -bottom-10 right-0 lg:-right-6 z-30">
                             <FlagChip tone="warn">Training expires in 12 days</FlagChip>
                         </motion.div>
                     </div>
