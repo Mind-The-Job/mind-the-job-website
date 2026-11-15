@@ -133,7 +133,7 @@ export const Home = () => {
                             <ChatMockup />
                         </motion.div>
                         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.5 }}
-                            className="hidden md:block absolute -left-4 lg:-left-40 bottom-[-40px] w-[330px] z-20">
+                            className="hidden md:block absolute left-0 xl:-left-8 bottom-[-48px] w-[310px] z-20">
                             <DashboardMockup />
                         </motion.div>
                         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.1 }} className="hidden sm:block absolute top-6 -right-2 lg:right-[-24px] z-30">
