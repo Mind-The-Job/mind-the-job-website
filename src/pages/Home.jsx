@@ -255,6 +255,7 @@ export const Home = () => {
                             </li>
                         ))}
                     </ol>
+                    <Link to="/how-it-works" className="inline-flex items-center gap-2 mt-8 font-semibold text-secondary-dark">See the full step-by-step guide, from day 1 to your first report <ArrowRight size={18} aria-hidden="true" /></Link>
                 </div>
             </section>
 

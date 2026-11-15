@@ -74,6 +74,7 @@ export const Footer = () => {
                     <div>
                         <h4 className="text-lg font-semibold mb-6 text-secondary">Compliance Autopilot</h4>
                         <ul className="space-y-4 text-gray-300">
+                            <li><Link to="/how-it-works" className="hover:text-white transition-colors">How it works</Link></li>
                             <li><Link to="/health-check" className="hover:text-white transition-colors">Free Compliance Health Check</Link></li>
                             <li><Link to="/demo" className="hover:text-white transition-colors">Try the free demo</Link></li>
                             <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing and plans</Link></li>

@@ -22,6 +22,7 @@ export const Navbar = ({ style }) => {
     }, [location]);
 
     const navLinks = [
+        { name: 'How it works', href: '/how-it-works' },
         { name: 'Pricing', href: '/pricing' },
         { name: 'Free demo', href: '/demo' },
         { name: 'Security', href: '/security' },
