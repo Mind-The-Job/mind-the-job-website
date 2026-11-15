@@ -95,7 +95,7 @@ export default async function handler(request, response) {
   <h2 style="color:#0F172A">Thank you, ${escapeHtml(name.split(' ')[0])}</h2>
   <p>We've received your ${escapeHtml(title.toLowerCase())} for <strong>${escapeHtml(company)}</strong>.</p>
   <p>${escapeHtml(nextStep)}</p>
-  <p>Questions? Reply to this email or call +44 (0) 7956 063717.</p>
+  <p>Questions? Reply to this email or call +44 (0) 7780 114420.</p>
   <p style="color:#64748B;font-size:12px">Mind the Job Ltd. You received this email because this address was entered on mindthejob.com. If that wasn't you, please ignore this email.</p>
 </div>`,
         }).catch((err) => console.error('lead confirmation failed', err));

@@ -96,7 +96,7 @@ export const Footer = () => {
                         <ul className="space-y-4 text-gray-300">
                             <li>13 Lanark Square, London, E14 9QD</li>
                             <li><a href="mailto:hallo@mindthejob.com" className="hover:text-white transition-colors">hallo@mindthejob.com</a></li>
-                            <li>+44 (0) 7956 063717</li>
+                            <li><a href="tel:+447780114420" className="hover:text-white transition-colors">+44 (0) 7780 114420</a></li>
                             <li><Link to="/contact" className="text-secondary hover:text-white font-medium transition-colors">Send us a message &rarr;</Link></li>
                         </ul>
                     </div>
