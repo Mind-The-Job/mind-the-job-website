@@ -12,7 +12,7 @@ export const Footer = () => {
                             <img src="/logo.png" alt="Mind the Job" className="h-20 w-auto" />
                         </div>
                         <p className="text-gray-300 mb-6 leading-relaxed">
-                            We help companies hire the right people for the right job. Powered by data, driven by people.
+                            AI compliance and admin for UK staffing agencies. We handle the paperwork, you handle the people.
                         </p>
                         <div className="flex gap-4">
                             {/* Facebook */}

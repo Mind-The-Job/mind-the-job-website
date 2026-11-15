@@ -1,14 +1,18 @@
 import { Resend } from 'resend';
+import { escapeHtml, isEmail, cleanText, guardRequest } from './_lib/security.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(request, response) {
-    if (request.method !== 'POST') {
-        return response.status(405).json({ error: 'Method not allowed' });
-    }
+    if (!guardRequest(request, response)) return;
 
     try {
-        const { email, firstName } = request.body;
+        const body = request.body || {};
+        const email = cleanText(body.email, 254);
+        const firstName = escapeHtml(cleanText(body.firstName, 80) || 'there');
+        if (!isEmail(email)) {
+            return response.status(400).json({ error: 'Invalid email' });
+        }
 
         const { data, error } = await resend.emails.send({
             from: 'Mind the Job Team <info@mindthejob.com>',
@@ -54,11 +58,12 @@ export default async function handler(request, response) {
         });
 
         if (error) {
-            return response.status(400).json({ error });
+            return response.status(400).json({ error: 'Email could not be sent.' });
         }
 
         return response.status(200).json({ data });
     } catch (error) {
-        return response.status(500).json({ error: error.message });
+        console.error('send-welcome-email failed', error);
+        return response.status(500).json({ error: 'Email could not be sent.' });
     }
 }

@@ -22,10 +22,12 @@ export const Navbar = ({ style }) => {
     }, [location]);
 
     const navLinks = [
-        { name: 'For Companies', href: '/companies' },
-        { name: 'For Candidates', href: '/candidates' },
-        { name: 'About Us', href: '/about' },
-        { name: 'Blog', href: '/blog' },
+        { name: 'Pricing', href: '/pricing' },
+        { name: 'Free demo', href: '/demo' },
+        { name: 'Security', href: '/security' },
+        { name: 'Training', href: '/training' },
+        { name: 'Recruitment', href: '/companies' },
+        { name: 'Book a Health Check', href: '/health-check' },
         { name: 'Sign up / Login', href: '/auth' },
     ];
 
@@ -48,12 +50,12 @@ export const Navbar = ({ style }) => {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center gap-8">
+                <div className="hidden lg:flex items-center gap-6">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             to={link.href}
-                            className={`text-text-main hover:text-secondary transition-colors ${link.name === 'Sign up / Login' ? 'font-bold' : 'font-medium'
+                            className={`text-text-main hover:text-secondary transition-colors ${link.name === 'Book a Health Check' ? 'font-bold text-secondary-dark' : link.name === 'Sign up / Login' ? 'font-bold' : 'font-medium'
                                 }`}
                         >
                             {link.name}
@@ -63,7 +65,9 @@ export const Navbar = ({ style }) => {
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="md:hidden text-text-main"
+                    className="lg:hidden text-text-main min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+                    aria-expanded={isMobileMenuOpen}
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
                     {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -77,7 +81,7 @@ export const Navbar = ({ style }) => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-surface border-t border-gray-100 absolute w-full left-0 overflow-hidden shadow-xl"
+                        className="lg:hidden bg-surface border-t border-gray-100 absolute w-full left-0 overflow-hidden shadow-xl"
                     >
                         <div className="flex flex-col p-4 gap-2">
                             {navLinks.map((link) => (

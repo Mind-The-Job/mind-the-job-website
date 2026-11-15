@@ -15,6 +15,12 @@ import { Contact } from './pages/Contact';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Auth } from './pages/Auth';
+import { Pricing } from './pages/Pricing';
+import { Demo } from './pages/Demo';
+import { DemoApp } from './pages/DemoApp';
+import { HealthCheck } from './pages/HealthCheck';
+import { Security } from './pages/Security';
+import { Training } from './pages/Training';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { supabase } from './lib/supabaseClient';
 
@@ -103,6 +109,12 @@ function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/demo/app" element={<DemoApp />} />
+            <Route path="/health-check" element={<HealthCheck />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/training" element={<Training />} />
           </Routes>
         </main>
         <Footer />
