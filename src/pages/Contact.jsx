@@ -32,7 +32,8 @@ export const Contact = () => {
                                     </div>
                                     <div>
                                         <h4 className="font-bold text-gray-900">Email</h4>
-                                        <p className="text-gray-500">info@mindthejob.com</p>
+                                        <p className="text-gray-500"><a href="mailto:hallo@mindthejob.com" className="hover:text-primary">hallo@mindthejob.com</a></p>
+                                        <p className="text-gray-500 mt-1">Shahriar Arafat, CEO: <a href="mailto:shahriar@mindthejob.com" className="hover:text-primary">shahriar@mindthejob.com</a></p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -41,7 +42,7 @@ export const Contact = () => {
                                     </div>
                                     <div>
                                         <h4 className="font-bold text-gray-900">Phone</h4>
-                                        <p className="text-gray-500">+44 (0) 7956 063717</p>
+                                        <p className="text-gray-500"><a href="tel:+447780114420" className="hover:text-primary">+44 (0) 7780 114420</a></p>
                                     </div>
                                 </div>
                             </div>

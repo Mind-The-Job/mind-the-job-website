@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { ConstructionBanner } from './components/layout/ConstructionBanner';
 import { Home } from './pages/Home';
 import { ForCompanies } from './pages/ForCompanies';
 
@@ -15,6 +14,15 @@ import { Contact } from './pages/Contact';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Auth } from './pages/Auth';
+import { Pricing } from './pages/Pricing';
+import { Demo } from './pages/Demo';
+import { DemoApp } from './pages/DemoApp';
+import { HealthCheck } from './pages/HealthCheck';
+import { Security } from './pages/Security';
+import { Training } from './pages/Training';
+import { Feedback } from './pages/Feedback';
+import { HowItWorks } from './pages/HowItWorks';
+import { AdminCRM } from './pages/AdminCRM';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { supabase } from './lib/supabaseClient';
 
@@ -47,19 +55,6 @@ const AuthRedirectHandler = () => {
 function App() {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  const [showBanner, setShowBanner] = useState(false);
-
-  useEffect(() => {
-    const isDismissed = sessionStorage.getItem('construction_banner_dismissed');
-    if (!isDismissed) {
-      setShowBanner(true);
-    }
-  }, []);
-
-  const handleDismissBanner = () => {
-    setShowBanner(false);
-    sessionStorage.setItem('construction_banner_dismissed', 'true');
-  };
 
   if (!supabaseUrl || !supabaseKey) {
     return (
@@ -86,12 +81,9 @@ function App() {
       <ScrollToTop />
       <AuthRedirectHandler />
       <div className="min-h-screen flex flex-col font-sans text-text-main bg-surface-muted">
-        {showBanner && <ConstructionBanner onClose={handleDismissBanner} />}
+        <Navbar style={{ top: '0' }} />
 
-        {/* Pass down style to Navbar to adjust top position if banner is visible */}
-        <Navbar style={{ top: showBanner ? '48px' : '0' }} />
-
-        <main className={`flex-grow ${showBanner ? 'pt-[48px]' : 'pt-0'} transition-all duration-300`}>
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/companies" element={<ForCompanies />} />
@@ -103,6 +95,15 @@ function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/demo/app" element={<DemoApp />} />
+            <Route path="/health-check" element={<HealthCheck />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/training" element={<Training />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/admin" element={<AdminCRM />} />
           </Routes>
         </main>
         <Footer />
