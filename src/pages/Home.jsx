@@ -37,17 +37,21 @@ export const Home = () => {
     return (
         <div className="bg-surface-muted text-text-main">
             {/* Hero */}
-            <section className="bg-white pt-36 pb-20">
+            <section className="bg-gradient-to-b from-teal-50 via-white to-white pt-36 pb-20">
                 <div className="container mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-12 items-center">
                     <div className="space-y-6">
                         <p className="text-sm font-semibold uppercase tracking-wider text-secondary-dark">AI compliance and admin for UK staffing agencies</p>
-                        <h1 className="text-4xl md:text-6xl font-bold text-primary leading-tight">Get workers compliant and on shift faster, without hiring more admin staff.</h1>
-                        <p className="text-lg md:text-xl text-text-muted max-w-xl">We set up and run AI that collects and checks candidate documents, tracks every expiry date and keeps your records ready for the Fair Work Agency. You approve. We do the chasing.</p>
+                        <h1 className="text-4xl md:text-6xl font-bold text-primary leading-tight">Stop chasing paperwork. Get every worker compliant in days, not weeks.</h1>
+                        <p className="text-lg md:text-xl text-text-muted max-w-xl">Your AI compliance team collects and checks every candidate document, tracks every expiry date and keeps you ready for the Fair Work Agency, 24/7. You approve in minutes. We do the rest.</p>
                         <div className="flex flex-col sm:flex-row gap-3">
-                            <Link to="/health-check" className="inline-flex justify-center items-center rounded-xl bg-secondary-dark text-white font-semibold px-6 py-4 hover:bg-primary transition-colors">Book your free Compliance Health Check</Link>
+                            <Link to="/health-check" className="inline-flex justify-center items-center rounded-xl bg-amber-400 text-primary font-bold px-6 py-4 shadow-lg shadow-amber-400/30 hover:bg-amber-300 transition-colors">Book your free Compliance Health Check</Link>
                             <Link to="/demo" className="inline-flex justify-center items-center rounded-xl border border-slate-300 bg-white text-primary font-semibold px-6 py-4 hover:border-primary transition-colors">Try the free 14-day demo</Link>
                         </div>
-                        <p className="text-sm text-text-muted">Live in 14 days · Annual plans have £0 setup · Built for care, nursing, education and industrial staffing</p>
+                        <ul className="flex flex-wrap gap-2 text-sm font-semibold">
+                            {['Live in 14 days', '£0 setup on annual plans', '8+ hours a week saved, or a month free', 'UK GDPR by design'].map((t) => (
+                                <li key={t} className="rounded-full bg-teal-50 text-teal-900 border border-teal-200 px-3 py-1">{t}</li>
+                            ))}
+                        </ul>
                     </div>
                     <div className="bg-primary rounded-3xl p-6 text-slate-200 shadow-xl" aria-label="Example dashboard">
                         <div className="flex justify-between items-center mb-4">
@@ -224,7 +228,7 @@ export const Home = () => {
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Find out how many hours you could get back</h2>
                     <p className="text-lg text-teal-50 mb-8">A free 30-minute Compliance Health Check, with a 1-page report within 24 hours. No obligation.</p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                        <Link to="/health-check" className="rounded-xl bg-white text-primary font-bold px-6 py-4">Book my free Health Check</Link>
+                        <Link to="/health-check" className="rounded-xl bg-amber-400 text-primary font-bold px-6 py-4 hover:bg-amber-300">Book my free Health Check</Link>
                         <Link to="/demo" className="rounded-xl border border-white text-white font-bold px-6 py-4">Try the free demo</Link>
                     </div>
                 </div>

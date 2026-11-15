@@ -55,7 +55,7 @@ export const Navbar = ({ style }) => {
                         <Link
                             key={link.name}
                             to={link.href}
-                            className={`text-text-main hover:text-secondary transition-colors ${link.name === 'Book a Health Check' ? 'font-bold text-secondary-dark' : link.name === 'Sign up / Login' ? 'font-bold' : 'font-medium'
+                            className={`text-text-main hover:text-secondary transition-colors ${link.name === 'Book a Health Check' ? 'font-bold bg-amber-400 text-primary rounded-full px-4 py-2 hover:bg-amber-300 hover:text-primary' : link.name === 'Sign up / Login' ? 'font-bold' : 'font-medium'
                                 }`}
                         >
                             {link.name}

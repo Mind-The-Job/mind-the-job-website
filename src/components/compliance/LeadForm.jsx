@@ -109,7 +109,7 @@ export const LeadForm = ({ type, submitLabel, onSuccess, extra = {}, showMessage
                 <label htmlFor={`${type}-marketing`} className="text-sm text-slate-700">Send me compliance tips and updates (optional, unsubscribe anytime).</label>
             </div>
             {error && <p role="alert" className="text-red-700 font-semibold">{error}</p>}
-            <button type="submit" disabled={status === 'sending'} className="w-full min-h-[50px] rounded-xl bg-secondary-dark text-white font-bold text-lg hover:bg-primary transition-colors disabled:opacity-60">
+            <button type="submit" disabled={status === 'sending'} className="w-full min-h-[50px] rounded-xl bg-amber-400 text-primary font-bold text-lg hover:bg-amber-300 transition-colors disabled:opacity-60">
                 {status === 'sending' ? 'Sending…' : submitLabel}
             </button>
         </form>
