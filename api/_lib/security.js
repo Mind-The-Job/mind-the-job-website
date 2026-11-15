@@ -67,3 +67,22 @@ export function guardRequest(request, response) {
     }
     return true;
 }
+
+// Base URL for links in emails: the site the request came from, if it is ours.
+export function siteUrl(request) {
+    const origin = request.headers.origin || '';
+    return isAllowedOrigin(request) && origin ? origin : 'https://www.mindthejob.com';
+}
+
+// Origin and rate-limit checks for admin and feedback endpoints (any method).
+export function guardOrigin(request, response, limit = 60) {
+    if (!isAllowedOrigin(request)) {
+        response.status(403).json({ error: 'Forbidden' });
+        return false;
+    }
+    if (isRateLimited(request, limit)) {
+        response.status(429).json({ error: 'Too many requests. Please try again later.' });
+        return false;
+    }
+    return true;
+}

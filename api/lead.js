@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
-import { escapeHtml, isEmail, cleanText, guardRequest } from './_lib/security.js';
+import { escapeHtml, isEmail, cleanText, guardRequest, siteUrl } from './_lib/security.js';
+import { dbReady, insertRow } from './_lib/db.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 // Comma-separated list in Vercel (LEAD_NOTIFY_EMAIL), otherwise both company inboxes.
@@ -50,6 +51,21 @@ export default async function handler(request, response) {
         const title = TYPES[type];
         const submittedAt = new Date().toISOString();
 
+        // Save to the CRM first, so a lead is never lost even if an email fails.
+        let leadId = null;
+        if (dbReady()) {
+            try {
+                const saved = await insertRow('leads', {
+                    type, name, email, phone: phone || null, company,
+                    company_number: companyNumber || null, workers: workers || null,
+                    plan: plan || null, billing: billing || null, message: message || null, marketing,
+                });
+                leadId = saved?.id || null;
+            } catch (err) {
+                console.error('lead save failed', err);
+            }
+        }
+
         const { error } = await resend.emails.send({
             from: 'Mind the Job Website <hallo@mindthejob.com>',
             to: NOTIFY,
@@ -71,11 +87,11 @@ export default async function handler(request, response) {
     ${row('Submitted', submittedAt)}
   </table>
   ${message ? `<p style="white-space:pre-wrap;margin-top:16px">${escapeHtml(message)}</p>` : ''}
-  <p style="color:#475569;font-size:12px;margin-top:24px">Reply within 1 working hour (Service Promise). Add this lead to the CRM.</p>
+  <p style="color:#475569;font-size:12px;margin-top:24px">Reply within 1 working hour (Service Promise). ${leadId ? 'Saved to the CRM: <a href="https://www.mindthejob.com/admin">open the CRM dashboard</a>.' : 'Not saved to the CRM (database not connected): please add it by hand.'}</p>
 </div>`,
         });
 
-        if (error) {
+        if (error && !leadId) {
             console.error('lead notify failed', error);
             return response.status(502).json({ error: 'Sorry, we could not send your request. Please email hallo@mindthejob.com.' });
         }
@@ -85,6 +101,10 @@ export default async function handler(request, response) {
             'health-check': 'We will contact you within 1 working hour (Monday to Friday, 9am to 5:30pm) to book your free 30-minute Compliance Health Check.',
             plan: 'We will contact you within 1 working hour to confirm your details and send your service agreement and Data Processing Agreement to sign online.',
         }[type];
+
+        const base = siteUrl(request);
+        const stars = leadId ? [1, 2, 3, 4, 5].map((n) =>
+            `<a href="${base}/feedback?ref=${leadId}&amp;score=${n}" style="display:inline-block;margin-right:6px;padding:8px 12px;border:1px solid #CBD5E1;border-radius:8px;color:#0F172A;text-decoration:none;font-weight:bold">${n} ★</a>`).join('') : '';
 
         await resend.emails.send({
             from: 'Mind the Job <hallo@mindthejob.com>',
@@ -96,6 +116,7 @@ export default async function handler(request, response) {
   <p>We've received your ${escapeHtml(title.toLowerCase())} for <strong>${escapeHtml(company)}</strong>.</p>
   <p>${escapeHtml(nextStep)}</p>
   <p>Questions? Reply to this email or call +44 (0) 7780 114420.</p>
+  ${stars ? `<p style="margin-top:20px"><strong>How easy was it to get in touch with us?</strong> Tap a score (5 is best):</p><p>${stars}</p>` : ''}
   <p style="color:#64748B;font-size:12px">Mind the Job Ltd. You received this email because this address was entered on mindthejob.com. If that wasn't you, please ignore this email.</p>
 </div>`,
         }).catch((err) => console.error('lead confirmation failed', err));

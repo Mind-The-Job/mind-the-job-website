@@ -20,6 +20,8 @@ import { DemoApp } from './pages/DemoApp';
 import { HealthCheck } from './pages/HealthCheck';
 import { Security } from './pages/Security';
 import { Training } from './pages/Training';
+import { Feedback } from './pages/Feedback';
+import { AdminCRM } from './pages/AdminCRM';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { supabase } from './lib/supabaseClient';
 
@@ -98,6 +100,8 @@ function App() {
             <Route path="/health-check" element={<HealthCheck />} />
             <Route path="/security" element={<Security />} />
             <Route path="/training" element={<Training />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/admin" element={<AdminCRM />} />
           </Routes>
         </main>
         <Footer />
