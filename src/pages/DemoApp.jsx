@@ -6,7 +6,7 @@ import { Lock, Check } from 'lucide-react';
 const sampleQueue = [
     { id: 'a', worker: 'A. Patel', doc: 'Enhanced DBS', detail: 'Name and date of birth match · Update Service checked', flag: 'All checks passed', warn: false },
     { id: 'b', worker: 'M. Silva', doc: 'Right to work (share code)', detail: 'Checked via certified provider · permission valid to 06/2028', flag: 'All checks passed', warn: false },
-    { id: 'c', worker: 'L. Brown', doc: 'Paediatric first aid', detail: 'Certificate dated 14/01/2027 · provider recognised', flag: 'Photo slightly blurred, text still readable', warn: true },
+    { id: 'c', worker: 'L. Brown', doc: 'Paediatric first aid', detail: 'Certificate dated 14/01/2026 · provider recognised', flag: 'Photo slightly blurred, text still readable', warn: true },
     { id: 'd', worker: 'T. Nowak', doc: 'Reference', detail: 'From previous care employer · dates match the CV', flag: 'Referee uses a personal email: please confirm', warn: true },
 ];
 
@@ -24,11 +24,26 @@ const locked = [
     ['Your own named specialist', 'WhatsApp support within 2 working hours'],
 ];
 
+const rejectReasons = [
+    'Photo unclear: please upload a clearer copy',
+    'Document has expired',
+    'Name does not match ID',
+    'Need a work email for the referee',
+];
+
 export const DemoApp = () => {
-    const [decided, setDecided] = useState([]);
+    const [decisions, setDecisions] = useState([]);
+    const [rejecting, setRejecting] = useState(null);
+    const [reason, setReason] = useState(rejectReasons[0]);
     const [doc, setDoc] = useState(null);
-    const pending = sampleQueue.filter((q) => !decided.includes(q.id));
-    const decide = (id) => setDecided((d) => [...d, id]);
+    const pending = sampleQueue.filter((q) => !decisions.some((d) => d.id === q.id));
+    const approvedCount = decisions.filter((d) => d.outcome === 'Approved').length;
+    const decide = (q, outcome, why) => {
+        const time = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        setDecisions((d) => [...d, { id: q.id, worker: q.worker, doc: q.doc, outcome, why, time }]);
+        setRejecting(null);
+        setReason(rejectReasons[0]);
+    };
 
     return (
         <div className="bg-slate-100 pt-28 pb-20 min-h-screen">
@@ -46,7 +61,7 @@ export const DemoApp = () => {
                 </header>
 
                 <section aria-label="Sample numbers" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[['Workers cleared', '17 / 20'], ['Waiting for approval', String(pending.length)], ['Expiring in 30 days', '3'], ['Hours saved this month (sample)', '38']].map(([l, v]) => (
+                    {[['Workers cleared', `${17 + approvedCount} / 20`], ['Waiting for approval', String(pending.length)], ['Expiring in 30 days', '3'], ['Hours saved this month (sample)', '38']].map(([l, v]) => (
                         <div key={l} className="bg-white rounded-2xl border border-slate-200 p-5"><p className="text-sm text-text-muted">{l}</p><p className="text-3xl font-bold mt-1">{v}</p></div>
                     ))}
                 </section>
@@ -64,12 +79,33 @@ export const DemoApp = () => {
                                     <p className="text-sm text-text-muted">{q.detail}</p>
                                     <p className={`text-sm font-semibold ${q.warn ? 'text-amber-800' : 'text-emerald-800'}`}>{q.flag}</p>
                                 </div>
-                                <div className="flex gap-2">
-                                    <button type="button" onClick={() => decide(q.id)} className="min-h-[44px] px-4 rounded-lg border border-slate-300 font-semibold">Reject with reason</button>
-                                    <button type="button" onClick={() => decide(q.id)} className="min-h-[44px] px-4 rounded-lg bg-secondary-dark text-white font-semibold">Approve</button>
-                                </div>
+                                {rejecting === q.id ? (
+                                    <div className="w-full flex flex-wrap gap-2 items-center">
+                                        <label htmlFor={`reason-${q.id}`} className="sr-only">Reason for rejecting</label>
+                                        <select id={`reason-${q.id}`} value={reason} onChange={(e) => setReason(e.target.value)} className="min-h-[44px] flex-1 min-w-[220px] rounded-lg border border-slate-300 px-3">
+                                            {rejectReasons.map((r) => <option key={r}>{r}</option>)}
+                                        </select>
+                                        <button type="button" onClick={() => setRejecting(null)} className="min-h-[44px] px-4 rounded-lg border border-slate-300 font-semibold">Cancel</button>
+                                        <button type="button" onClick={() => decide(q, 'Rejected', reason)} className="min-h-[44px] px-4 rounded-lg bg-red-700 text-white font-semibold">Send back to worker</button>
+                                    </div>
+                                ) : (
+                                    <div className="flex gap-2">
+                                        <button type="button" onClick={() => setRejecting(q.id)} className="min-h-[44px] px-4 rounded-lg border border-slate-300 font-semibold">Reject with reason</button>
+                                        <button type="button" onClick={() => decide(q, 'Approved')} className="min-h-[44px] px-4 rounded-lg bg-secondary-dark text-white font-semibold">Approve</button>
+                                    </div>
+                                )}
                             </div>
                         ))}
+                        {decisions.length > 0 && (
+                            <div className="pt-3 border-t border-slate-200">
+                                <h3 className="font-semibold mb-2">Decision log (sample)</h3>
+                                <ul className="text-sm space-y-1">
+                                    {decisions.map((d) => (
+                                        <li key={d.id}><span className="font-semibold">{d.time}</span> · {d.worker} · {d.doc}: <span className={d.outcome === 'Approved' ? 'text-emerald-800 font-semibold' : 'text-red-700 font-semibold'}>{d.outcome}</span>{d.why ? ` (${d.why}). The worker gets a WhatsApp message asking for a new copy.` : ''}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </section>
 
                     <section aria-label="Full version" className="bg-white rounded-2xl border border-slate-200 p-6 space-y-3">
