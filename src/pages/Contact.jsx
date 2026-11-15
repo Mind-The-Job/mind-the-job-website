@@ -32,7 +32,7 @@ export const Contact = () => {
                                     </div>
                                     <div>
                                         <h4 className="font-bold text-gray-900">Email</h4>
-                                        <p className="text-gray-500">hello@mindthejob.com</p>
+                                        <p className="text-gray-500">hallo@mindthejob.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">

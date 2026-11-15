@@ -3,7 +3,7 @@ import { escapeHtml, isEmail, cleanText, guardRequest } from './_lib/security.js
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 // Comma-separated list in Vercel (LEAD_NOTIFY_EMAIL), otherwise both company inboxes.
-const NOTIFY = (process.env.LEAD_NOTIFY_EMAIL || 'hello@mindthejob.com,shahriar@mindthejob.com')
+const NOTIFY = (process.env.LEAD_NOTIFY_EMAIL || 'hallo@mindthejob.com,shahriar@mindthejob.com')
     .split(',')
     .map((e) => e.trim())
     .filter((e) => isEmail(e));
@@ -51,7 +51,7 @@ export default async function handler(request, response) {
         const submittedAt = new Date().toISOString();
 
         const { error } = await resend.emails.send({
-            from: 'Mind the Job Website <hello@mindthejob.com>',
+            from: 'Mind the Job Website <hallo@mindthejob.com>',
             to: NOTIFY,
             reply_to: email,
             subject: `${title}: ${company.replace(/[\r\n]/g, ' ')}`,
@@ -77,7 +77,7 @@ export default async function handler(request, response) {
 
         if (error) {
             console.error('lead notify failed', error);
-            return response.status(502).json({ error: 'Sorry, we could not send your request. Please email hello@mindthejob.com.' });
+            return response.status(502).json({ error: 'Sorry, we could not send your request. Please email hallo@mindthejob.com.' });
         }
 
         const nextStep = {
@@ -87,7 +87,7 @@ export default async function handler(request, response) {
         }[type];
 
         await resend.emails.send({
-            from: 'Mind the Job <hello@mindthejob.com>',
+            from: 'Mind the Job <hallo@mindthejob.com>',
             to: [email],
             subject: `We've received your request – Mind the Job`,
             html: `
@@ -103,6 +103,6 @@ export default async function handler(request, response) {
         return response.status(200).json({ ok: true });
     } catch (error) {
         console.error('lead failed', error);
-        return response.status(500).json({ error: 'Sorry, something went wrong. Please email hello@mindthejob.com.' });
+        return response.status(500).json({ error: 'Sorry, something went wrong. Please email hallo@mindthejob.com.' });
     }
 }

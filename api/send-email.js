@@ -17,8 +17,8 @@ export default async function handler(request, response) {
         }
 
         const { data, error } = await resend.emails.send({
-            from: 'Mind the Job Website <hello@mindthejob.com>',
-            to: ['hello@mindthejob.com', 'shahriar@mindthejob.com'],
+            from: 'Mind the Job Website <hallo@mindthejob.com>',
+            to: ['hallo@mindthejob.com', 'shahriar@mindthejob.com'],
             reply_to: email, // This allows you to hit "Reply" and email the user back
             subject: `New message from ${name.replace(/[\r\n]/g, ' ')}`,
             html: `
