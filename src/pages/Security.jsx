@@ -52,7 +52,7 @@ export const Security = () => (
                     <ul className="list-disc pl-5 space-y-2 text-slate-700">{s.items.map((i) => <li key={i}>{i}</li>)}</ul>
                 </section>
             ))}
-            <p className="text-sm text-text-muted">Certifications are listed here only once they are awarded. Questions about security? Email info@mindthejob.com.</p>
+            <p className="text-sm text-text-muted">Certifications are listed here only once they are awarded. Questions about security? Email hello@mindthejob.com.</p>
         </div>
     </div>
 );

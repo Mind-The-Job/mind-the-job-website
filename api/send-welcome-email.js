@@ -15,7 +15,7 @@ export default async function handler(request, response) {
         }
 
         const { data, error } = await resend.emails.send({
-            from: 'Mind the Job Team <info@mindthejob.com>',
+            from: 'Mind the Job Team <hello@mindthejob.com>',
             to: [email],
             subject: 'Welcome to Mind the Job! 🚀',
             html: `
