@@ -48,7 +48,7 @@ export const Navbar = ({ style }) => {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <div className="hidden lg:flex items-center gap-6">
+                <div className="hidden xl:flex items-center gap-5 whitespace-nowrap">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
@@ -63,7 +63,7 @@ export const Navbar = ({ style }) => {
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="lg:hidden text-text-main min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    className="xl:hidden text-text-main min-h-[44px] min-w-[44px] flex items-center justify-center"
                     aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
                     aria-expanded={isMobileMenuOpen}
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -79,7 +79,7 @@ export const Navbar = ({ style }) => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-surface border-t border-gray-100 absolute w-full left-0 overflow-hidden shadow-xl"
+                        className="xl:hidden bg-surface border-t border-gray-100 absolute w-full left-0 overflow-hidden shadow-xl"
                     >
                         <div className="flex flex-col p-4 gap-2">
                             {navLinks.map((link) => (
